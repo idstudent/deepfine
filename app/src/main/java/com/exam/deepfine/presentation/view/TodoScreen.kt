@@ -88,10 +88,19 @@ fun TodoScreen() {
                 .fillMaxWidth()
                 .weight(1f),
         ) {
-            items(todos.value.filter { !it.isCompleted }) { todo ->
-                TodoItemView(todo) { item ->
-                    todoViewModel.updateItem(item)
-                }
+            items(
+                todos.value.filter { !it.isCompleted },
+                key = { it.id }
+            ) {
+                TodoItemView(
+                    todo = it,
+                    onCompleteClick = { item ->
+                        todoViewModel.updateItem(item)
+                    },
+                    onDragDelete = { item ->
+                        todoViewModel.deleteItem(item)
+                    }
+                )
             }
         }
 

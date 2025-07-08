@@ -69,4 +69,5 @@ dependencies {
     implementation(libs.sqlcipher)
     implementation(libs.androidx.sqlite)
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.compose.material)
 }

@@ -36,4 +36,10 @@ class TodoViewModel @Inject constructor(
             todoUseCase.updateItem(item.copy(isCompleted = true, completedTimeStamp = System.currentTimeMillis()))
         }
     }
+
+    fun deleteItem(item: TodoItem) {
+        viewModelScope.launch {
+            todoUseCase.deleteItem(item)
+        }
+    }
 }
