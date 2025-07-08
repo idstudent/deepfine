@@ -37,7 +37,7 @@ fun TodoHistoryView(
             horizontalArrangement = Arrangement.SpaceBetween,
         ){
             Text("등록일:${formatDate(todo.addTimeStamp)}")
-            Text("완료일:${formatDate(todo.addTimeStamp)}")
+            Text("완료일:${todo.completedTimeStamp?.let { formatDate(it) } ?: ""}")
         }
     }
 
