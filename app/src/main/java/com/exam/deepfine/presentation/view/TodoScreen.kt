@@ -131,13 +131,13 @@ fun TodoScreen(
             )
             Spacer(modifier = Modifier.width(16.dp))
             IconButton(
+                // trim을 써야될지 말아야할지 생각하다가, 입력창이 비어있으면 이라고해서 공백도 입력으로 보았습니다.
+                enabled = inputText.isNotEmpty(),
                 modifier = Modifier
                     .background(color = AppColors.Color686868, shape = CircleShape),
                 onClick = {
-                    if (inputText.isNotEmpty()) {
-                        todoViewModel.insertItem(TodoItem(content = inputText))
-                        inputText = ""
-                    }
+                    todoViewModel.insertItem(TodoItem(content = inputText))
+                    inputText = ""
                 }
             ) {
                 Icon(
