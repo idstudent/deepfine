@@ -1,7 +1,6 @@
 package com.exam.deepfine.presentation.view
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -13,13 +12,13 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -35,14 +34,18 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.exam.deepfine.R
 import com.exam.deepfine.data.model.TodoItem
-import com.exam.deepfine.presentation.TodoViewModel
+import com.exam.deepfine.navigation.AppRoutes
+import com.exam.deepfine.presentation.viewmodel.TodoViewModel
 import com.exam.deepfine.util.AppColors
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TodoScreen() {
+fun TodoScreen(
+    navController: NavController
+) {
     val todoViewModel: TodoViewModel = hiltViewModel()
     val todos = todoViewModel.todos.collectAsState()
 
@@ -57,22 +60,22 @@ fun TodoScreen() {
             .fillMaxSize()
             .background(AppColors.Color686868)
     ) {
-        TopAppBar(
+        CenterAlignedTopAppBar(
             title = {
                 Text(
-                    modifier = Modifier.fillMaxWidth(),
                     text = "DEEP.FINE TODO",
                     color = AppColors.Black,
                     fontSize = 20.sp,
-                    textAlign = TextAlign.Center
                 )
             },
-            colors = TopAppBarDefaults.topAppBarColors(
+            colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
                 containerColor = AppColors.White
             ),
             actions = {
                 IconButton(
-                    onClick = {}
+                    onClick = {
+                        navController.navigate(AppRoutes.HISTORY)
+                    }
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.outline_deployed_code_history_24),

@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.exam.deepfine.presentation.view.HistoryScreen
 import com.exam.deepfine.presentation.view.TodoScreen
 
 @Composable
@@ -13,10 +14,10 @@ fun NavigationGraph(navController: NavHostController) {
         startDestination = AppRoutes.TODO_LIST
     ) {
         composable(route = AppRoutes.TODO_LIST) {
-            TodoScreen()
+            TodoScreen(navController)
         }
         composable(route = AppRoutes.HISTORY) {
-            // TODO: 히스토리 나오면 작업
+            HistoryScreen(navController)
         }
     }
 }

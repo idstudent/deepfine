@@ -1,4 +1,4 @@
-package com.exam.deepfine.presentation
+package com.exam.deepfine.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.exam.deepfine.domain.usecase.TodoUseCase
