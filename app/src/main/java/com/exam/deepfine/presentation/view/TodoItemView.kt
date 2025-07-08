@@ -101,7 +101,7 @@ fun TodoItemView(
                     )
                 }
 
-                if (dismissState.offset.value < -50f) {
+                if (dismissState.dismissDirection == DismissDirection.EndToStart) {
                     Box(
                         modifier = Modifier
                             .align(Alignment.CenterEnd)
