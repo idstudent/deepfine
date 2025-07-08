@@ -30,4 +30,10 @@ class TodoViewModel @Inject constructor(
             todoUseCase.insertItem(item)
         }
     }
+
+    fun updateItem(item: TodoItem) {
+        viewModelScope.launch {
+            todoUseCase.updateItem(item.copy(isCompleted = true, completedTimeStamp = System.currentTimeMillis()))
+        }
+    }
 }

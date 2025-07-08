@@ -88,9 +88,9 @@ fun TodoScreen() {
                 .fillMaxWidth()
                 .weight(1f),
         ) {
-            items(todos.value) { todo ->
-                TodoItemView(todo) {
-                    todoViewModel.insertItem(it)
+            items(todos.value.filter { !it.isCompleted }) { todo ->
+                TodoItemView(todo) { item ->
+                    todoViewModel.updateItem(item)
                 }
             }
         }
