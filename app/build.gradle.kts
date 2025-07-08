@@ -66,6 +66,7 @@ dependencies {
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
-    implementation(libs.sqlcipher)     
+    implementation(libs.sqlcipher)
     implementation(libs.androidx.sqlite)
+    implementation(libs.androidx.navigation.compose)
 }

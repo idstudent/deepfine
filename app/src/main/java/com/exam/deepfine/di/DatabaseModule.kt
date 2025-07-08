@@ -7,6 +7,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import net.sqlcipher.database.SupportFactory
 import javax.inject.Singleton
 
 @Module
@@ -14,9 +15,12 @@ import javax.inject.Singleton
 class DatabaseModule {
     @Singleton
     @Provides
-    fun provideTodoDatabase(app: Application) {
-        Room.databaseBuilder(app, TodoDatabase::class.java, "todo_db")
-            .fallbackToDestructiveMigration()
+    fun provideTodoDatabase(app: Application): TodoDatabase {
+        val key = "deep_fine_key".toByteArray()
+        val factory = SupportFactory(key)
+
+        return Room.databaseBuilder(app, TodoDatabase::class.java, "todo_db")
+            .openHelperFactory(factory)
             .build()
     }
 }

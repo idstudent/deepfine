@@ -1,19 +1,14 @@
-package com.exam.deepfine.presentation
+package com.exam.deepfine.presentation.view
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
@@ -27,8 +22,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -38,14 +34,23 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.exam.deepfine.R
+import com.exam.deepfine.data.model.TodoItem
+import com.exam.deepfine.presentation.TodoViewModel
 import com.exam.deepfine.util.AppColors
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TodoScreen() {
+    val todoViewModel: TodoViewModel = hiltViewModel()
+    val todos = todoViewModel.todos.collectAsState()
+
     var inputText by remember { mutableStateOf("") }
-    val todoList = remember { mutableStateListOf<String>() }
+
+    LaunchedEffect(Unit) {
+        todoViewModel.getTodos()
+    }
 
     Column(
         modifier = Modifier
@@ -82,10 +87,11 @@ fun TodoScreen() {
             modifier = Modifier
                 .fillMaxWidth()
                 .weight(1f),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            items(todoList) { todo ->
-                TodoItem()
+            items(todos.value) { todo ->
+                TodoItemView(todo) {
+                    todoViewModel.insertItem(it)
+                }
             }
         }
 
@@ -101,7 +107,10 @@ fun TodoScreen() {
                 onValueChange = { inputText = it },
                 modifier = Modifier.weight(1f),
                 placeholder = {
-                    Text("할 일을 입력해주세요.", color = AppColors.Color686868)
+                    Text(
+                        text = "할 일을 입력해주세요.",
+                        color = AppColors.Color686868
+                    )
                 },
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedContainerColor = AppColors.White,
@@ -115,7 +124,7 @@ fun TodoScreen() {
                     .background(color = AppColors.Color686868, shape = CircleShape),
                 onClick = {
                     if (inputText.isNotEmpty()) {
-                        // TODO: 저장 작업
+                        todoViewModel.insertItem(TodoItem(content = inputText))
                         inputText = ""
                     }
                 }
