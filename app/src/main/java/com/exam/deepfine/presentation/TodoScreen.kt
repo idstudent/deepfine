@@ -104,8 +104,8 @@ fun TodoScreen() {
                     Text("할 일을 입력해주세요.", color = AppColors.Color686868)
                 },
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedContainerColor = AppColors.Color686868,
-                    unfocusedLabelColor = AppColors.Color686868
+                    focusedContainerColor = AppColors.White,
+                    unfocusedLabelColor = AppColors.White
                 ),
                 shape = RoundedCornerShape(24.dp)
             )
